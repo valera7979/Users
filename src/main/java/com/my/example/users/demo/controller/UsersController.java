@@ -1,20 +1,37 @@
 package com.my.example.users.demo.controller;
 
+import com.my.example.users.demo.model.User;
+import com.my.example.users.demo.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.time.Instant;
 
 @RestController
 public class UsersController {
 
-	@GetMapping(value = "/hello")
-	public List<String> helloWorld() {
-		List<String> helloWorlds = new LinkedList<>();
-		helloWorlds.add("Hello");
-		helloWorlds.add("world!!");
+	@Autowired
+	UserRepository repository;
 
-		return helloWorlds;
+	@PostMapping(value = "/user")
+	public void addUser(@RequestBody User user) {
+
+		repository.save(new User(user.getId(), user.getName(), Instant.now(), user.isAdmin()));
+	}
+
+	@GetMapping(value="/users")
+	public Iterable<User> findAll() {
+
+		return repository.findAll();
+	}
+
+	@GetMapping(value="/user/{name}")
+	public Iterable<User> findByName(@PathVariable("name") String name) {
+
+		return repository.findByName(name);
 	}
 }
