@@ -31,6 +31,6 @@ public class User implements Serializable {
 	@Column(name = "registered")
 	private Instant registered = Instant.now();
 
-	@Column(name = "isAdmin", columnDefinition = "bool default true")
+	@Column(name = "isAdmin")
 	private boolean isAdmin;
 }
