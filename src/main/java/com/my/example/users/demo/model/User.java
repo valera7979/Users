@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -22,15 +22,12 @@ import java.time.Instant;
 public class User implements Serializable {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(name = "name")
 	private String name;
 
-	@Column(name = "registered")
 	private Instant registered = Instant.now();
 
-	@Column(name = "isAdmin")
 	private boolean isAdmin;
 }
